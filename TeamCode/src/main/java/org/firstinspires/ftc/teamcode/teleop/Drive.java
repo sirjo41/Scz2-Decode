@@ -33,7 +33,7 @@ public class Drive extends LinearOpMode {
 
     public static double TARGET_SHOOTER_RPM_CLOSE = 1400;
     public static double TARGET_SHOOTER_RPM_FAR = 1400;
-    public static double TARGET_SHOOTER_RPM= TARGET_SHOOTER_RPM_CLOSE;
+    public static double TARGET_SHOOTER_RPM= 0;
     private static final double FEEDER_IDLE = 1.0;
     private static final double FEEDER_FEEDING = 0.55;
 
@@ -133,15 +133,16 @@ public class Drive extends LinearOpMode {
             // Intake state changes (edge-triggered)
             if (gamepadEx.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)> 0.2) {
                 intakeState = IntakeState.IN;
-//                gamepad1.runRumbleEffect(shstart);
+                gamepad1.runRumbleEffect(shstart);
             }
 
             if (gamepadEx.wasJustPressed(GamepadKeys.Button.X)) {
                 intakeState = IntakeState.OUT;
-                gamepad1.runRumbleEffect(shstop);
+                gamepad1.runRumbleEffect(shstart);
             }
 
             if (gamepadEx.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)) {
+                gamepad1.runRumbleEffect(shstop);
                 intakeState = IntakeState.OFF;
             }
 
@@ -174,20 +175,25 @@ public class Drive extends LinearOpMode {
             }
             if(gamepadEx.wasJustPressed((GamepadKeys.Button.RIGHT_BUMPER))){
                 gamepad1.runRumbleEffect(shstop);
-                shooterMotor.setVelocity(0);
+                TARGET_SHOOTER_RPM = 0;
             }
             shooterMotor.setVelocity(TARGET_SHOOTER_RPM);
+
 
             telemetry.addLine("=== Shooter State ===");
             telemetry.addData("Target RPM", TARGET_SHOOTER_RPM);
             telemetry.addData("Current RPM", String.format("%.0f", shooterMotor.getVelocity()));
             telemetry.addData("Shooter Ready", isShooterReady(shooterMotor.getVelocity()) ? "YES" : "NO");
             telemetry.addData("Feeder Position", String.format("%.2f", feederServo.getPosition()));
+            telemetry.addData("Intake Status",String.format("%.2f", intakeState));
             telemetry.update();
         }
     }
     public boolean isShooterReady(double Shooter_RPM) {
         double SHOOTER_VELOCITY_TOLERANCE = 200;
+    if(TARGET_SHOOTER_RPM == 0) {
+            return false;
+        }
         return (Math.abs(Shooter_RPM - TARGET_SHOOTER_RPM) < SHOOTER_VELOCITY_TOLERANCE);
     }
 
