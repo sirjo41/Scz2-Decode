@@ -129,9 +129,11 @@ public class Blue extends OpMode {
             /* ===================== SHOOT #1 ===================== */
             case 1:
                 if (shooter.isShooterReady()) {
+                    intake.setPower(1);
                     shooter.feed();
 
                     if (pathTimer.getElapsedTimeSeconds() > SHOOT_DELAY) {
+                        intake.setPower(0);
                         shooter.retractFeeder();
                         setPathState(2);
                     }
@@ -142,6 +144,7 @@ public class Blue extends OpMode {
             case 2:
                 if (!follower.isBusy()) {
                     follower.followPath(intake2, true);
+                    intake.setPower(1);
                     setPathState(3);
                 }
                 break;
@@ -156,8 +159,7 @@ public class Blue extends OpMode {
             /* ===================== MOVE TO SHOT #2 ===================== */
             case 4:
                 if (!follower.isBusy()) {
-                    shooter.spinUpShooter();
-                    follower.setMaxPower(1);
+                    intake.setPower(0);
                     follower.followPath(ToGate, true);
                     setPathState(5);
                 }
@@ -165,6 +167,7 @@ public class Blue extends OpMode {
 
             case 5:
                 if (!follower.isBusy()) {
+                    shooter.spinUpShooter();
                     follower.followPath(toShoot2, true);
                     pathTimer.resetTimer();
                     setPathState(6);
@@ -174,9 +177,11 @@ public class Blue extends OpMode {
             /* ===================== SHOOT #2 ===================== */
             case 6:
                 if (shooter.isShooterReady()) {
+                    intake.setPower(1);
                     shooter.feed();
 
                     if (pathTimer.getElapsedTimeSeconds() > SHOOT_DELAY) {
+                        intake.setPower(0);
                         shooter.retractFeeder();
                         setPathState(7);
                     }
@@ -187,6 +192,7 @@ public class Blue extends OpMode {
             case 7:
                 if (!follower.isBusy()) {
                     follower.followPath(intake1, true);
+                    intake.setPower(1);
                     setPathState(8);
                 }
                 break;
@@ -201,6 +207,7 @@ public class Blue extends OpMode {
             /* ===================== MOVE TO SHOT #3 ===================== */
             case 9:
                 if (!follower.isBusy()) {
+                    intake.setPower(0);
                     shooter.spinUpShooter();
                     follower.followPath(toShoot3, true);
                     pathTimer.resetTimer();
@@ -211,9 +218,11 @@ public class Blue extends OpMode {
             /* ===================== SHOOT #3 ===================== */
             case 10:
                 if (shooter.isShooterReady()) {
+                    intake.setPower(1);
                     shooter.feed();
 
                     if (pathTimer.getElapsedTimeSeconds() > SHOOT_DELAY) {
+                        intake.setPower(0);
                         shooter.retractFeeder();
                         setPathState(11);
                     }
@@ -230,6 +239,7 @@ public class Blue extends OpMode {
 
             case 12:
                 if (!follower.isBusy()) {
+                    intake.setPower(1);
                     follower.followPath(feed3, true);
                     setPathState(13);
                 }
@@ -238,6 +248,7 @@ public class Blue extends OpMode {
             /* ===================== MOVE TO SHOT #4 ===================== */
             case 13:
                 if (!follower.isBusy()) {
+                    intake.setPower(0);
                     shooter.spinUpShooter();
                     follower.followPath(toShoot4, true);
                     pathTimer.resetTimer();
@@ -248,9 +259,11 @@ public class Blue extends OpMode {
             /* ===================== SHOOT #4 ===================== */
             case 14:
                 if (shooter.isShooterReady()) {
+                    intake.setPower(1);
                     shooter.feed();
 
                     if (pathTimer.getElapsedTimeSeconds() > SHOOT_DELAY) {
+                        intake.setPower(0);
                         shooter.retractFeeder();
                         setPathState(15);
                     }
@@ -315,9 +328,6 @@ public class Blue extends OpMode {
     public void start() {
         opmodeTimer.resetTimer();
         shooter.spinUpShooter();
-        intake.setPower(1);
-
-
         setPathState(0);
     }
 

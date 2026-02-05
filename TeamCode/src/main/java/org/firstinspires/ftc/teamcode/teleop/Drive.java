@@ -94,11 +94,12 @@ public class Drive extends LinearOpMode {
         intakeSensor.setGain(2);
 
         shstart = new Gamepad.RumbleEffect.Builder()
-                .addStep(0.5, 0.5, 500)  //  Rumble right motor 100% for 500 mSec
+                .addStep(0.5, 0.5, 500)
                 .build();
         shstop = new Gamepad.RumbleEffect.Builder()
                 .addStep(0.7, 0.7, 250)
-                .addStep(0.7, 0.7, 250)//  Rumble right motor 100% for 500 mSec
+                .addStep(0, 0, 250)
+                .addStep(0.7, 0.7, 250)
                 .build();
 
 
@@ -159,7 +160,7 @@ public class Drive extends LinearOpMode {
                     break;
             }
 
-            if(gamepadEx.getButton(GamepadKeys.Button.A) && isShooterReady(shooterMotor.getVelocity())){
+            if(gamepadEx.getButton(GamepadKeys.Button.A)){
                 feederServo.setPosition(FEEDER_FEEDING);
             }
             else {
@@ -170,7 +171,7 @@ public class Drive extends LinearOpMode {
                 TARGET_SHOOTER_RPM = TARGET_SHOOTER_RPM_CLOSE;
             }
             if(gamepadEx.wasJustPressed(GamepadKeys.Button.DPAD_UP)){
-                gamepad1.runRumbleEffect(shstop);
+                gamepad1.runRumbleEffect(shstart);
                 TARGET_SHOOTER_RPM = TARGET_SHOOTER_RPM_FAR;
             }
             if(gamepadEx.wasJustPressed((GamepadKeys.Button.RIGHT_BUMPER))){
@@ -185,7 +186,6 @@ public class Drive extends LinearOpMode {
             telemetry.addData("Current RPM", String.format("%.0f", shooterMotor.getVelocity()));
             telemetry.addData("Shooter Ready", isShooterReady(shooterMotor.getVelocity()) ? "YES" : "NO");
             telemetry.addData("Feeder Position", String.format("%.2f", feederServo.getPosition()));
-            telemetry.addData("Intake Status",String.format("%.2f", intakeState));
             telemetry.update();
         }
     }
