@@ -24,7 +24,7 @@ public class Shooter {
     public static final double SHOOTER_F = 15; // Tune: 32767 / MaxTicksPerSec (approx 2700 for 6000RPM motor)
 
     // Servo positions
-    private static final double FEEDER_IDLE = 1.0;
+    private static final double FEEDER_IDLE = 0;
     private static final double FEEDER_FEEDING = 0.55;
 
     // Hardware components

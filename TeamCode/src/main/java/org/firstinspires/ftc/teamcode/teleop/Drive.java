@@ -34,7 +34,7 @@ public class Drive extends LinearOpMode {
     public static double TARGET_SHOOTER_RPM_CLOSE = 1400;
     public static double TARGET_SHOOTER_RPM_FAR = 1400;
     public static double TARGET_SHOOTER_RPM= 0;
-    private static final double FEEDER_IDLE = 1.0;
+    private static final double FEEDER_IDLE = 0;
     private static final double FEEDER_FEEDING = 0.55;
 
     public static final double SHOOTER_P = 55; // Tune: Start with 10% of F
@@ -98,7 +98,7 @@ public class Drive extends LinearOpMode {
                 .build();
         shstop = new Gamepad.RumbleEffect.Builder()
                 .addStep(0.7, 0.7, 250)
-                .addStep(0, 0, 250)
+                .addStep(0, 0, 50)
                 .addStep(0.7, 0.7, 250)
                 .build();
 
